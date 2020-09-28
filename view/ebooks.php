@@ -24,49 +24,52 @@
 		<div class="row">
 			<div class="column left">
 				<div class="topnav">
-					<a href="../index.html">Re-Read</a>
-					<a href="./libros.html">Libros</a>
-					<a href="./ebooks.html">eBook</a>
+					<a href="../index.php">Re-Read</a>
+					<a href="./libros.php">Libros</a>
+					<a href="./ebooks.php">eBook</a>
 				</div>
 
 				<h3>Toda la actualidad en eBook</h3>
 
 				<!--eBooks con descripción-->
-				<div class="ebook">
+				<!--<div class="ebook">
 					<a
 						href="https://play.google.com/store/books/details/Cube_Kid_El_gatito_que_se_perdi%C3%B3_en_el_Inframundo?id=l7jbDwAAQBAJ&gl=ES"
 					>
 						<img src="../img/ebook_1.jpg" alt="ebook 1" />
 						<div>El gatito que se perdió en el Inframundo</div></a
 					>
-				</div>
+				</div>-->
 
-				<div class="ebook">
-					<a
-						href="https://play.google.com/store/books/details/Timothy_Willink_NLP_Psicolog%C3%ADa_Oscura?id=79jWDwAAQBAJ&gl=ES"
-					>
-						<img src="../img/ebook_2.jpg" alt="ebook 2" />
-						<div>NLP Psicología Oscura</div></a
-					>
-				</div>
+				<?php
+				//1. Conexión con la base de datos
+				include '../services/connection.php';
 
-				<div class="ebook">
-					<a
-						href="https://play.google.com/store/books/details/Joel_Antunes_Psicologia_Positiva?id=XShaDwAAQBAJ&gl=ES"
-					>
-						<img src="../img/ebook_3.jpg" alt="ebook 3" />
-						<div>Psicologia Positiva: PNL e Coaching pessoal</div></a
-					>
-				</div>
+				//2. Selección y muestra de datos de la base de datos
+				$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");
 
-				<div class="ebook">
-					<a
-						href="https://play.google.com/store/books/details/Steven_Erikson_El_Dios_Tullido_Malaz_X?id=CzDwDwAAQBAJ&gl=ES"
-					>
-						<img src="../img/ebook_4.jpg" alt="ebook 4" />
-						<div>El Dios Tullido. Malaz X</div></a
-					>
-				</div>
+				if(!empty($result) && mysqli_num_rows($result)>0){
+					$i=0;					
+					//datos de salida de cada fila (fila = row)
+					while($row = mysqli_fetch_array($result)){
+						$i ++;
+						echo"<div class= 'ebook'>";
+						//Añadimos la imagen a la página con la etiqueta img de HTML			
+											
+						echo"<img src=../img/".$row['img']." alt='".$row['Title']."'>";
+												
+						//Añadimos el título a lapágina con la etiqueta h2 de html
+						echo "<div>".$row['Title']." </div>";
+						echo "</div>";
+					 if($i % 3 == 0){					
+						echo "<div style='clear:both;'></div>";
+					 }
+					}
+				}else{
+					echo "0 resultados";
+				}
+				?>
+				
 			</div>
 
 			<div class="column right">
