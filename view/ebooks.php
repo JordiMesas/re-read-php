@@ -49,14 +49,21 @@
 				$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");
 
 				if(!empty($result) && mysqli_num_rows($result)>0){
+					$i=0;					
 					//datos de salida de cada fila (fila = row)
 					while($row = mysqli_fetch_array($result)){
+						$i ++;
 						echo"<div class= 'ebook'>";
-						//Añadimos la imagen a la página con la etiqueta img de HTML
+						//Añadimos la imagen a la página con la etiqueta img de HTML			
+											
 						echo"<img src=../img/".$row['img']." alt='".$row['Title']."'>";
+												
 						//Añadimos el título a lapágina con la etiqueta h2 de html
 						echo "<div>".$row['Title']." </div>";
 						echo "</div>";
+					 if($i % 3 == 0){					
+						echo "<div style='clear:both;'></div>";
+					 }
 					}
 				}else{
 					echo "0 resultados";
