@@ -87,7 +87,7 @@
 							echo $row['Title'];							
 							echo "</p>";						
 						}
-						
+
 				}else{
 						echo "0 resultados";
 					}
