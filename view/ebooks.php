@@ -60,7 +60,7 @@
 						echo"<img src=../img/".$row['img']." alt='".$row['Title']."'>";
 												
 						//Añadimos el título a lapágina con la etiqueta h2 de html
-						echo "<div>".$row['Title']." </div>";
+						echo "<div class='desc'>".$row['Description']." </div>";
 						echo "</div>";
 					 if($i % 3 == 0){					
 						echo "<div style='clear:both;'></div>";
