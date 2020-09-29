@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--Estilos enlazados-->
-    <link rel="stylesheet" href="../css/estilo.css" />
+	<link rel="stylesheet" href="../css/estilo.css" />	
 </head>
 
 <body>
@@ -95,8 +95,8 @@
 
         </div>
     </div>
-
-	<script src="../js/code.js"></script>
+	
+	<script src="../js/code.js"></script>	
 </body>
 
 </html>
