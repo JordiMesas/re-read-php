@@ -94,9 +94,7 @@
 			 ?>
 
         </div>
-    </div>
-	
-	<script src="../js/code.js"></script>	
+    </div>	
 </body>
 
 </html>
