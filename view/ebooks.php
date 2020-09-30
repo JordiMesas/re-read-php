@@ -92,7 +92,7 @@
 						echo "0 resultados";
 					}
 			 ?>
-
+			<script src="../js/code.js"></script>
         </div>
     </div>	
 </body>
