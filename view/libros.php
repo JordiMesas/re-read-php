@@ -53,11 +53,23 @@
 		</div>
 
 		<div class="column right">
-			<h2>Top ventas</h2>
-			<p>Cien años de soledad.</p>
-			<p>Crónica de una muerte anunciada.</p>
-			<p>El otoño del patriarca.</p>
-			<p>El general en su laberinto.</p>
+			<h2>Top ventas</h2>			
+            <?php
+			include '../services/connection.php';
+			$result = mysqli_query($conn, "SELECT Books.Title FROM books WHERE Top = '1'");
+
+				if(!empty($result) && mysqli_num_rows($result)>0){
+
+						while($row = mysqli_fetch_array($result)){							
+							echo"<p>";												
+							echo $row['Title'];							
+							echo "</p>";						
+						}
+
+				}else{
+						echo "0 resultados";
+					}
+			 ?>
 		</div>
 	</div>
 </body>
