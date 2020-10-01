@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Nuestro proyecto Re-Read</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--Estilos enlazados-->
-	<link rel="stylesheet" href="../css/estilo.css" />	
+    <link rel="stylesheet" href="../css/estilo.css" />
 </head>
 
 <body>
@@ -32,6 +32,33 @@
 
             <h3>Toda la actualidad en eBook</h3>
 
+            <!--Nuevo desarrollo: formulari para filtrar autor-->
+            <div>
+                <form class="formulario" action="ebooks.php" method="post">
+                    <label for="fautor">Autor</label>
+                    <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
+
+                    <!--<label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+                    <label for="country">Country</label>
+                    <select id="country" name="country">
+                        <option value="australia">Australia</option>
+                        <option value="canada">Canada</option>
+                        <option value="usa">USA</option>
+                    </select>-->
+
+                    <input type="submit" value="Buscar">
+                </form>
+			</div>
+			
+			<?php 
+				if(isset($_POST['fautor'])){
+					// filtrará los ebooks que se mostrarán en la página					
+				}else{
+					//mostrará todos los ebooks de la BD
+				}
+			?>
             <!--eBooks con descripción-->
             <!--<div class="ebook">
 					<a
@@ -92,9 +119,9 @@
 						echo "0 resultados";
 					}
 			 ?>
-			<script src="../js/code.js"></script>
+            <script src="../js/code.js"></script>
         </div>
-    </div>	
+    </div>
 </body>
 
 </html>
