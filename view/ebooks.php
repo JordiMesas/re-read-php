@@ -50,31 +50,21 @@
 
                     <input type="submit" value="Buscar">
                 </form>
-			</div>
-			
+            </div>
+
 			<?php 
+				include '../services/connection.php';
 				if(isset($_POST['fautor'])){
-					// filtrará los ebooks que se mostrarán en la página					
+					// filtrará los ebooks que se mostrarán en la página
+
+					$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");					
+
 				}else{
 					//mostrará todos los ebooks de la BD
+					
+					$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");				
+					
 				}
-			?>
-            <!--eBooks con descripción-->
-            <!--<div class="ebook">
-					<a
-						href="https://play.google.com/store/books/details/Cube_Kid_El_gatito_que_se_perdi%C3%B3_en_el_Inframundo?id=l7jbDwAAQBAJ&gl=ES"
-					>
-						<img src="../img/ebook_1.jpg" alt="ebook 1" />
-						<div>El gatito que se perdió en el Inframundo</div></a
-					>
-				</div>-->
-
-            <?php
-				//1. Conexión con la base de datos
-				include '../services/connection.php';
-
-				//2. Selección y muestra de datos de la base de datos
-				$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");
 
 				if(!empty($result) && mysqli_num_rows($result)>0){
 					$i=0;					
@@ -89,15 +79,25 @@
 						//Añadimos el título a lapágina con la etiqueta h2 de html
 						echo "<div class='desc'>".$row['Description']." </div>";
 						echo "</div>";
-					 if($i % 3 == 0){					
+					if($i % 3 == 0){					
 						echo "<div style='clear:both;'></div>";
-					 }
+					}
 					}
 				}else{
 					echo "0 resultados";
 				}
-				?>
+			?>
+            <!--eBooks con descripción-->
+            <!--<div class="ebook">
+					<a
+						href="https://play.google.com/store/books/details/Cube_Kid_El_gatito_que_se_perdi%C3%B3_en_el_Inframundo?id=l7jbDwAAQBAJ&gl=ES"
+					>
+						<img src="../img/ebook_1.jpg" alt="ebook 1" />
+						<div>El gatito que se perdió en el Inframundo</div></a
+					>
+				</div>-->
 
+          
         </div>
 
         <div class="column right">
