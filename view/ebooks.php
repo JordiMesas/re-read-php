@@ -56,8 +56,9 @@
 				include '../services/connection.php';
 				if(isset($_POST['fautor'])){
 					// filtrará los ebooks que se mostrarán en la página
-
-					$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");					
+                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%'";
+                                       
+					$result = mysqli_query($conn, $query);					
 
 				}else{
 					//mostrará todos los ebooks de la BD
