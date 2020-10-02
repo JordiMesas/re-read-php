@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Nuestro proyecto Re-Read</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--Estilos enlazados-->
-	<link rel="stylesheet" href="../css/estilo.css" />	
+    <link rel="stylesheet" href="../css/estilo.css" />
 </head>
 
 <body>
@@ -32,22 +32,50 @@
 
             <h3>Toda la actualidad en eBook</h3>
 
-            <!--eBooks con descripción-->
-            <!--<div class="ebook">
-					<a
-						href="https://play.google.com/store/books/details/Cube_Kid_El_gatito_que_se_perdi%C3%B3_en_el_Inframundo?id=l7jbDwAAQBAJ&gl=ES"
-					>
-						<img src="../img/ebook_1.jpg" alt="ebook 1" />
-						<div>El gatito que se perdió en el Inframundo</div></a
-					>
-				</div>-->
+            <!--Nuevo desarrollo: formulari para filtrar autor-->
+            <div>
+                <form class="formulario" action="ebooks.php" method="post">
+                    <label for="fautor">Autor</label>
+                    <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
 
-            <?php
-				//1. Conexión con la base de datos
-				include '../services/connection.php';
+                    <!--
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    -->
 
-				//2. Selección y muestra de datos de la base de datos
-				$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");
+                    <label for="country">País</label>
+                    <select id="country" name="country">
+                        <option value="%">Todos los paises</option>
+                        <?php
+                        // conexión de la base de datos
+                        include '../services/connection.php';
+                        $query = "SELECT DISTINCT Authors.Country FROM Authors ORDER BY Country";
+                        $result = mysqli_query($conn,$query);
+                        
+                        while ($row = mysqli_fetch_array($result)) {
+                             echo '<option value="'.$row['Country'].'">'.$row['Country'].'</option>';
+                        }
+                       
+                        ?>                        
+                    </select>
+                    <input type="submit" value="Buscar">
+                </form>
+            </div>
+
+			<?php 
+				
+				if(isset($_POST['fautor'])){
+					// filtrará los ebooks que se mostrarán en la página
+                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '%{$_POST['country']}%'";
+
+					$result = mysqli_query($conn, $query);					
+
+				}else{
+					//mostrará todos los ebooks de la BD
+					
+					$result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM books WHERE ebook != '0'");				
+					
+				}
 
 				if(!empty($result) && mysqli_num_rows($result)>0){
 					$i=0;					
@@ -62,15 +90,25 @@
 						//Añadimos el título a lapágina con la etiqueta h2 de html
 						echo "<div class='desc'>".$row['Description']." </div>";
 						echo "</div>";
-					 if($i % 3 == 0){					
+					if($i % 3 == 0){					
 						echo "<div style='clear:both;'></div>";
-					 }
+					}
 					}
 				}else{
 					echo "0 resultados";
 				}
-				?>
+			?>
+            <!--eBooks con descripción-->
+            <!--<div class="ebook">
+					<a
+						href="https://play.google.com/store/books/details/Cube_Kid_El_gatito_que_se_perdi%C3%B3_en_el_Inframundo?id=l7jbDwAAQBAJ&gl=ES"
+					>
+						<img src="../img/ebook_1.jpg" alt="ebook 1" />
+						<div>El gatito que se perdió en el Inframundo</div></a
+					>
+				</div>-->
 
+          
         </div>
 
         <div class="column right">
@@ -92,9 +130,9 @@
 						echo "0 resultados";
 					}
 			 ?>
-			<script src="../js/code.js"></script>
+            <script src="../js/code.js"></script>
         </div>
-    </div>	
+    </div>
 </body>
 
 </html>
