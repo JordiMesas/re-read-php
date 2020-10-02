@@ -38,26 +38,36 @@
                     <label for="fautor">Autor</label>
                     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
 
-                    <!--<label for="lname">Last Name</label>
+                    <!--
+                    <label for="lname">Last Name</label>
                     <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    -->
 
-                    <label for="country">Country</label>
+                    <label for="country">País</label>
                     <select id="country" name="country">
-                        <option value="australia">Australia</option>
-                        <option value="canada">Canada</option>
-                        <option value="usa">USA</option>
-                    </select>-->
-
+                        <option value="%">Todos los paises</option>
+                        <?php
+                        // conexión de la base de datos
+                        include '../services/connection.php';
+                        $query = "SELECT DISTINCT Authors.Country FROM Authors ORDER BY Country";
+                        $result = mysqli_query($conn,$query);
+                        
+                        while ($row = mysqli_fetch_array($result)) {
+                             echo '<option value="'.$row['Country'].'">'.$row['Country'].'</option>';
+                        }
+                       
+                        ?>                        
+                    </select>
                     <input type="submit" value="Buscar">
                 </form>
             </div>
 
 			<?php 
-				include '../services/connection.php';
+				
 				if(isset($_POST['fautor'])){
 					// filtrará los ebooks que se mostrarán en la página
-                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%'";
-                                       
+                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '%{$_POST['country']}%'";
+
 					$result = mysqli_query($conn, $query);					
 
 				}else{
