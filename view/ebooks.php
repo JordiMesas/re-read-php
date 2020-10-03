@@ -37,11 +37,9 @@
                 <form class="formulario" action="ebooks.php" method="post">
                     <label for="fautor">Autor</label>
                     <input type="text" id="fautor" name="fautor" placeholder="Introduce el autor...">
-
-                    <!--
-                    <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-                    -->
+                    
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" placeholder="Introduce el titulo...">                    
 
                     <label for="country">País</label>
                     <select id="country" name="country">
@@ -66,7 +64,7 @@
 				
 				if(isset($_POST['fautor'])){
 					// filtrará los ebooks que se mostrarán en la página
-                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '%{$_POST['country']}%'";
+                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON Books.id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}' AND Books.Title LIKE '{$_POST['titulo']}'";
 
 					$result = mysqli_query($conn, $query);					
 
@@ -88,7 +86,7 @@
 						echo"<img src=../img/".$row['img']." alt='".$row['Title']."'>";
 												
 						//Añadimos el título a lapágina con la etiqueta h2 de html
-						echo "<div class='desc'>".$row['Description']." </div>";
+						echo "<div style='text-align: center;' class='desc'>".$row['Description']." </div>";
 						echo "</div>";
 					if($i % 3 == 0){					
 						echo "<div style='clear:both;'></div>";
