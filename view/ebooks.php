@@ -64,7 +64,7 @@
 				
 				if(isset($_POST['fautor'])){
 					// filtrará los ebooks que se mostrarán en la página
-                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON Books.id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}' AND Books.Title LIKE '{$_POST['titulo']}'";
+                    $query = "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors ON Books.id=BooksAuthors.BookId INNER JOIN Authors ON Authors.Id = BooksAuthors.AuthorId WHERE Authors.Name LIKE '%{$_POST['fautor']}%' AND Authors.Country LIKE '{$_POST['country']}' AND Books.Title LIKE '%{$_POST['titulo']}%'";
 
 					$result = mysqli_query($conn, $query);					
 
